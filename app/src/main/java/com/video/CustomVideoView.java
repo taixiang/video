@@ -52,6 +52,7 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
         mDialogTotalTime.setVisibility(GONE);
         mDialogIcon.setVisibility(GONE);
         mDialogProgressBar.setVisibility(GONE);
+        init();
     }
 
     @Override
@@ -88,5 +89,11 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
         setViewShowState(mBottomContainer, GONE);
     }
 
-
+    @Override
+    protected void changeUiToPlayingBufferingShow() {
+        super.changeUiToPlayingBufferingShow();
+        mLoadingProgressBar.setVisibility(GONE);
+        setViewShowState(mTopContainer, GONE);
+        setViewShowState(mBottomContainer, GONE);
+    }
 }

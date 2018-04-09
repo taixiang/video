@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
     private void initData(){
 
         Data data4 = new Data();
-        data4.setType(1);
-        data4.setUrl("http://kaoyanvip.cn/static/img/index/one-2-m.jpg");
+        data4.setType(0);
+        data4.setUrl("https://cms.bscwin.com/upload/201803/19/756a7bef-6513-487b-ae9d-c5d7dae644b3.mp4");
         list.add(data4);
 
 
