@@ -1,4 +1,4 @@
-package com.video;
+package com.video.util;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

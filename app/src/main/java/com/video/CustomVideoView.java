@@ -15,18 +15,21 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
     public CustomVideoView(Context context, Boolean fullFlag) {
         super(context, fullFlag);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_DEFAULT);
+
         init();
     }
 
     public CustomVideoView(Context context) {
         super(context);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_DEFAULT);
+
         init();
     }
 
     public CustomVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_DEFAULT);
+
         init();
     }
 
