@@ -1,4 +1,4 @@
-package com.video.service;
+package com.video.bean;
 
 /**
  * Created by tx on 2017/8/16.

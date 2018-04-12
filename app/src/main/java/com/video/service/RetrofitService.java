@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.ArrayMap;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.video.bean.BaseBean;
 import com.video.util.LogUtil;
 
 import java.io.File;
@@ -180,6 +181,7 @@ public class RetrofitService {
         if(isShowLoading){
             view.showLoading();
         }
+
         ob.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<BaseBean<T>, T>() {
@@ -187,8 +189,10 @@ public class RetrofitService {
                     public T apply(@io.reactivex.annotations.NonNull BaseBean<T> tBaseBean)
                             throws Exception {
                         if (tBaseBean.getCode() != 200) {
+
                             throw new ApiException(tBaseBean.getCode(), tBaseBean.getMessage());
                         }
+
                         return tBaseBean.getData();
                     }
                 })
