@@ -76,9 +76,25 @@
 }
 
 #retrofit
+#-dontwarn okio.**
+#-dontwarn javax.annotation.**
+#-dontwarn javax.inject.**
+
+-keepattributes Signature
+# Retain service method parameters.
+-keepclassmembernames,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+
+-dontwarn okhttp3.**
 -dontwarn okio.**
 -dontwarn javax.annotation.**
-
+-dontwarn org.conscrypt.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -87,7 +103,13 @@
   public *;
 }
 
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
+
+
 -keep class com.video.Data
+-keep class com.video.service.BaseBean
+
 
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**

@@ -186,8 +186,8 @@ public class RetrofitService {
                     @Override
                     public T apply(@io.reactivex.annotations.NonNull BaseBean<T> tBaseBean)
                             throws Exception {
-                        if (tBaseBean.getCode() >= 50000) {
-                            throw new ApiException(tBaseBean.getCode(), tBaseBean.getMsg());
+                        if (tBaseBean.getCode() != 200) {
+                            throw new ApiException(tBaseBean.getCode(), tBaseBean.getMessage());
                         }
                         return tBaseBean.getData();
                     }
@@ -247,7 +247,7 @@ public class RetrofitService {
                     public BaseBean<T> apply(@io.reactivex.annotations.NonNull BaseBean<T> tBaseBean)
                             throws Exception {
                         if (tBaseBean.getCode() >= 50000) {
-                            throw new ApiException(tBaseBean.getCode(), tBaseBean.getMsg());
+                            throw new ApiException(tBaseBean.getCode(), tBaseBean.getMessage());
                         }
                         return tBaseBean;
                     }
@@ -298,7 +298,7 @@ public class RetrofitService {
                     public T apply(@io.reactivex.annotations.NonNull BaseBean<T> tBaseBean)
                             throws Exception {
                         if (tBaseBean.getCode() >= 50000) {
-                            throw new ApiException(tBaseBean.getCode(), tBaseBean.getMsg());
+                            throw new ApiException(tBaseBean.getCode(), tBaseBean.getMessage());
                         }
                         return tBaseBean.getData();
                     }

@@ -16,7 +16,9 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.video.service.BaseObserver;
 import com.video.service.IBaseView;
+import com.video.service.RetrofitService;
 import com.video.util.CommonUtil;
 
 import java.util.ArrayList;
@@ -58,35 +60,11 @@ public class MainActivity extends RxAppCompatActivity implements IBaseView {
         player = findViewById(R.id.player);
         iv = findViewById(R.id.iv);
 
-        int type = getIntent().getIntExtra("type", 0);
-        if(type == 1){ //软解降帧
-            Log.i("》》》》","软解降帧");
-            VideoOptionModel videoOptionModel =
-                    new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 27);
-            List<VideoOptionModel> list = new ArrayList<>();
-            list.add(videoOptionModel);
-            GSYVideoManager.instance().setOptionModelList(list);
-        }else if(type == 2){
-            Log.i("》》》》","硬解");
-            GSYVideoType.enableMediaCodec();
-            GSYVideoType.enableMediaCodecTexture();
-        }else if(type == 3){
-            Log.i("》》》》","硬解降帧");
-            VideoOptionModel videoOptionModel =
-                    new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 27);
-            List<VideoOptionModel> list = new ArrayList<>();
-            list.add(videoOptionModel);
-            GSYVideoManager.instance().setOptionModelList(list);
+        GSYVideoType.enableMediaCodec();
+        GSYVideoType.enableMediaCodecTexture();
 
-            GSYVideoType.enableMediaCodec();
-            GSYVideoType.enableMediaCodecTexture();
-        }
-
-
-        Log.i("》》》  ","是否硬解  "+GSYVideoType.isMediaCodec() +"  "+ GSYVideoType.isMediaCodecTexture());
         timer = new Timer();
         initData();
-        play();
 
         player.setStandardVideoAllCallBack(new VideoViewListener() {
 
@@ -111,37 +89,23 @@ public class MainActivity extends RxAppCompatActivity implements IBaseView {
         });
     }
 
+    /**
+     * 网络请求
+     */
     private void initData() {
-
-        Data data4 = new Data();
-        data4.setType(0);
-        data4.setUrl("https://cms.bscwin.com/upload/201803/19/756a7bef-6513-487b-ae9d-c5d7dae644b3.mp4");
-        list.add(data4);
-
-
-        Data data = new Data();
-        data.setType(0);
-        data.setUrl("https://cms.bscwin.com/upload/201801/30/9f9d9ebc-6f67-4e09-9b14-d59849c5fdd2.mp4");
-//        list.add(data);
-
-        Data data1 = new Data();
-        data1.setType(0);
-        data1.setUrl("https://cms.bscwin.com/upload/201801/30/9f9d9ebc-6f67-4e09-9b14-d59849c5fdd2.mp4");
-//        list.add(data1);
-
-        Data data2 = new Data();
-        data2.setType(1);
-        data2.setUrl("http://www.kaoyanvip.cn/static/img/index/banner1/bg.jpg");
-        list.add(data2);
-
-        Data data3 = new Data();
-        data3.setType(1);
-        data3.setUrl("http://www.kaoyanvip.cn/static/img/index/banner2/bg.jpg");
-//        list.add(data3);
-
-
+        RetrofitService.doSubscribeWithData(Constant.appUrlApi.getData(), this.<List<Data>>bindToLife(), new BaseObserver<List<Data>>() {
+            @Override
+            public void onNext(List<Data> data) {
+                super.onNext(data);
+                list.addAll(data);
+                play();
+            }
+        }, this, false);
     }
 
+    /**
+     * 播放0 视频&1 图片
+     */
     private void play() {
         nextType = list.get(index).getType();
         if (nextType == 0) {
@@ -162,6 +126,9 @@ public class MainActivity extends RxAppCompatActivity implements IBaseView {
         }
     }
 
+    /**
+     * 图片播放延迟5s
+     */
     private void startNewTask() {
         if (task != null) {
             task.cancel();
@@ -173,13 +140,19 @@ public class MainActivity extends RxAppCompatActivity implements IBaseView {
                 handler.sendEmptyMessage(0);
             }
         };
-        timer.schedule(task, 3000);
+        timer.schedule(task, 5000);
     }
 
     @Override
     protected void onResume() {
         getCurPlay().onVideoResume();
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        getCurPlay().onVideoPause();
+        super.onPause();
     }
 
     @Override

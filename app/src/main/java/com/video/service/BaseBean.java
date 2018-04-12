@@ -7,7 +7,7 @@ package com.video.service;
 
 public class BaseBean<T> {
     private int code;
-    private String msg;
+    private String message;
     private T data;
 
     public int getCode() {
@@ -18,12 +18,12 @@ public class BaseBean<T> {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {
@@ -38,7 +38,7 @@ public class BaseBean<T> {
     public String toString() {
         return "BaseBean{" +
                 "code=" + code +
-                ", msg='" + msg + '\'' +
+                ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }

@@ -7,6 +7,7 @@ package com.video;
 public class Data {
     private String url;
     private int type;
+    private String title;
 
     public String getUrl() {
         return url;

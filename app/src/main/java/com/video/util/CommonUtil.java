@@ -3,11 +3,6 @@ package com.video.util;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-/**
- * Created by tx on 2017/7/28.
- * 常用工具类
- */
-
 public class CommonUtil {
 
     /**
